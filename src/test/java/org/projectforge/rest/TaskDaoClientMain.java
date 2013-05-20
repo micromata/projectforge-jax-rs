@@ -25,8 +25,6 @@ package org.projectforge.rest;
 
 import java.util.Collection;
 
-import javax.ws.rs.core.MediaType;
-
 import org.projectforge.rest.objects.TaskObject;
 import org.projectforge.rest.objects.UserObject;
 
@@ -39,18 +37,14 @@ public class TaskDaoClientMain
 {
   private static final org.projectforge.common.Logger log = org.projectforge.common.Logger.getLogger(TaskDaoClientMain.class);
 
-  private static final String URL = "http://localhost:8080/ProjectForge/rest";
-
   public static void main(final String[] args)
   {
     final Client client = Client.create();
     UserObject user = RestClientMain.authenticate(client);
 
     // http://localhost:8080/ProjectForge/rest/task/tree // userId / token
-    WebResource webResource = client.resource(URL + "/task/tree");
-    ClientResponse response = webResource.queryParam("search", "").accept(MediaType.APPLICATION_JSON)
-        .header(Authentication.AUTHENTICATION_USER_ID, user.getId().toString())
-        .header(Authentication.AUTHENTICATION_TOKEN, user.getAuthenticationToken()).get(ClientResponse.class);
+    WebResource webResource = client.resource(RestClientMain.URL + "/task/tree").queryParam("search", "");
+    ClientResponse response = RestClientMain.getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
     }

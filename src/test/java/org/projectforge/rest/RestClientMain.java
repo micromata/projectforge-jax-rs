@@ -43,7 +43,20 @@ public class RestClientMain
   {
     final Client client = Client.create();
     UserObject user = authenticate(client);
-    initialContact(client, user.getId(), user.getAuthenticationToken());
+    initialContact(client, user);
+  }
+
+  /**
+   * Adds authentication and media type json.
+   * @param webResource
+   * @param user
+   * @return ClientResponse
+   */
+  public static ClientResponse getClientResponse(WebResource webResource, UserObject user)
+  {
+    return webResource.accept(MediaType.APPLICATION_JSON).header(Authentication.AUTHENTICATION_USER_ID, user.getId().toString())
+        .header(Authentication.AUTHENTICATION_TOKEN, user.getAuthenticationToken()).get(ClientResponse.class);
+
   }
 
   public static UserObject authenticate(Client client)
@@ -75,13 +88,12 @@ public class RestClientMain
     return user;
   }
 
-  public static void initialContact(Client client, Integer userId, String authenticationToken)
+  public static void initialContact(Client client, UserObject user)
   {
     // http://localhost:8080/ProjectForge/rest/authenticate/initialContact?clientVersion=5.0 // userId / token
-    WebResource webResource = client.resource(URL + "/authenticate/initialContact");
-    ClientResponse response = webResource.queryParam("clientVersion", ProjectForgeVersion.VERSION_STRING)
-        .accept(MediaType.APPLICATION_JSON).header(Authentication.AUTHENTICATION_USER_ID, userId.toString())
-        .header(Authentication.AUTHENTICATION_TOKEN, authenticationToken).get(ClientResponse.class);
+    WebResource webResource = client.resource(URL + "/authenticate/initialContact").queryParam("clientVersion",
+        ProjectForgeVersion.VERSION_STRING);
+    ClientResponse response = getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
     }

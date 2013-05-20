@@ -21,7 +21,11 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-package org.projectforge.web.rest;
+package org.projectforge.web.rest.objects;
+
+import org.projectforge.web.rest.AbstractBaseObject;
+
+
 
 
 /**

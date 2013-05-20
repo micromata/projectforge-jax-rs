@@ -28,6 +28,9 @@ import java.util.Collection;
 import javax.ws.rs.core.MediaType;
 
 import org.projectforge.ProjectForgeVersion;
+import org.projectforge.web.rest.objects.ServerInfo;
+import org.projectforge.web.rest.objects.TaskObject;
+import org.projectforge.web.rest.objects.UserObject;
 
 import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;

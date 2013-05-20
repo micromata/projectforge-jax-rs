@@ -23,10 +23,10 @@
 
 package org.projectforge.rest.objects;
 
+import java.lang.reflect.Field;
+
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.projectforge.rest.AbstractBaseObject;
-
-
-
 
 /**
  * REST object user. See {@link PFUserDO} for detail information about the fields.
@@ -92,5 +92,16 @@ public class UserObject extends AbstractBaseObject
   public void setAuthenticationToken(final String authenticationToken)
   {
     this.authenticationToken = authenticationToken;
+  }
+
+  @Override
+  public String toString()
+  {
+    return new ReflectionToStringBuilder(this) {
+      protected boolean accept(Field f)
+      {
+        return super.accept(f) && !f.getName().equals("authenticationToken");
+      }
+    }.toString();
   }
 }

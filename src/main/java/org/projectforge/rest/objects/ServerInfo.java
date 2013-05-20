@@ -23,6 +23,8 @@
 
 package org.projectforge.rest.objects;
 
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+
 
 /**
  * REST object for system info for initial contact.
@@ -82,12 +84,14 @@ public class ServerInfo
     return status;
   }
 
-  /**
-   * @param status the status to set
-   * @return this for chaining.
-   */
   public void setStatus(final String status)
   {
     this.status = status;
+  }
+
+  @Override
+  public String toString()
+  {
+    return new ReflectionToStringBuilder(this).toString();
   }
 }

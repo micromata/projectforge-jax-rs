@@ -43,7 +43,7 @@ public class TaskDaoClientMain
     UserObject user = RestClientMain.authenticate(client);
 
     // http://localhost:8080/ProjectForge/rest/task/tree // userId / token
-    WebResource webResource = client.resource(RestClientMain.URL + "/task/tree").queryParam("search", "");
+    WebResource webResource = client.resource(RestClientMain.URL + RestPaths.buildTreePath(RestPaths.TASK)).queryParam("search", "");
     ClientResponse response = RestClientMain.getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());

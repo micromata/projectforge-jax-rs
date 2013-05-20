@@ -37,7 +37,7 @@ public class RestClientMain
 {
   private static final org.projectforge.common.Logger log = org.projectforge.common.Logger.getLogger(RestClientMain.class);
 
-  public static final String URL = "http://localhost:8080/ProjectForge/rest";
+  public static final String URL = "http://localhost:8080/ProjectForge";
 
   public static void main(final String[] args)
   {
@@ -70,7 +70,7 @@ public class RestClientMain
   public static UserObject authenticate(Client client, String username, String password)
   {
     // http://localhost:8080/ProjectForge/rest/authenticate/getToken // username / password
-    WebResource webResource = client.resource(URL + "/authenticate/getToken");
+    WebResource webResource = client.resource(URL + RestPaths.buildPath(RestPaths.AUTHENTICATE_GET_TOKEN));
     ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).header(Authentication.AUTHENTICATION_USERNAME, username)
         .header(Authentication.AUTHENTICATION_PASSWORD, password).get(ClientResponse.class);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
@@ -91,7 +91,7 @@ public class RestClientMain
   public static void initialContact(Client client, UserObject user)
   {
     // http://localhost:8080/ProjectForge/rest/authenticate/initialContact?clientVersion=5.0 // userId / token
-    WebResource webResource = client.resource(URL + "/authenticate/initialContact").queryParam("clientVersion",
+    WebResource webResource = client.resource(URL + RestPaths.buildPath(RestPaths.AUTHENTICATE_INITIAL_CONTACT)).queryParam("clientVersion",
         ProjectForgeVersion.VERSION_STRING);
     ClientResponse response = getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {

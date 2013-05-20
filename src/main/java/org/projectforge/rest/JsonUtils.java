@@ -21,14 +21,14 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-package org.projectforge.web.rest;
+package org.projectforge.rest;
 
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.projectforge.web.rest.converter.UTCDateTypeAdapter;
+import org.projectforge.rest.converter.UTCDateTypeAdapter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

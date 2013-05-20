@@ -21,16 +21,18 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-package org.projectforge.web.rest;
+package org.projectforge.rest;
 
 import java.util.Collection;
 
 import javax.ws.rs.core.MediaType;
 
 import org.projectforge.ProjectForgeVersion;
-import org.projectforge.web.rest.objects.ServerInfo;
-import org.projectforge.web.rest.objects.TaskObject;
-import org.projectforge.web.rest.objects.UserObject;
+import org.projectforge.rest.Authentication;
+import org.projectforge.rest.JsonUtils;
+import org.projectforge.rest.objects.ServerInfo;
+import org.projectforge.rest.objects.TaskObject;
+import org.projectforge.rest.objects.UserObject;
 
 import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;

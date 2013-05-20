@@ -21,16 +21,16 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-package org.projectforge.web.rest.objects;
+package org.projectforge.rest.objects;
 
 import java.util.Collection;
 import java.util.TreeSet;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.projectforge.core.Priority;
+import org.projectforge.rest.AbstractBaseObject;
 import org.projectforge.task.TaskStatus;
 import org.projectforge.task.TimesheetBookingStatus;
-import org.projectforge.web.rest.AbstractBaseObject;
 
 /**
  * TaskDO object for REST,

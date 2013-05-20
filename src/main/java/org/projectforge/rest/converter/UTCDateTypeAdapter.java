@@ -21,7 +21,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-package org.projectforge.web.rest.converter;
+package org.projectforge.rest.converter;
 
 import java.lang.reflect.Type;
 import java.text.DateFormat;

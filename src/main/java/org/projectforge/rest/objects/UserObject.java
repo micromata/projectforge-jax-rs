@@ -21,64 +21,76 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-package org.projectforge.web.rest;
+package org.projectforge.rest.objects;
 
-import java.util.Date;
+import org.projectforge.rest.AbstractBaseObject;
+
+
+
 
 /**
- * Base fields (like DefaultBaseDO of ProjectForge webapp package).
+ * REST object user. See {@link PFUserDO} for detail information about the fields.
+ * @see PFUserDO
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
  */
-public abstract class AbstractBaseObject
+public class UserObject extends AbstractBaseObject
 {
-  private Integer id;
+  private String username, firstName, lastName, email;
 
-  private boolean deleted;
+  private String authenticationToken;
 
-  private Date created, lastUpdate;
-
-  public AbstractBaseObject()
+  public UserObject()
   {
   }
 
-  public Integer getId()
+  public String getUsername()
   {
-    return id;
+    return username;
   }
 
-  public void setId(Integer id)
+  public void setUsername(final String username)
   {
-    this.id = id;
+    this.username = username;
   }
 
-  public boolean isDeleted()
+  public String getFirstName()
   {
-    return deleted;
+    return firstName;
   }
 
-  public void setDeleted(boolean deleted)
+  public void setFirstName(final String firstName)
   {
-    this.deleted = deleted;
+    this.firstName = firstName;
   }
 
-  public Date getCreated()
+  public String getLastName()
   {
-    return created;
+    return lastName;
   }
 
-  public void setCreated(Date created)
+  public void setLastName(final String lastName)
   {
-    this.created = created;
+    this.lastName = lastName;
   }
 
-  public Date getLastUpdate()
+  public String getEmail()
   {
-    return lastUpdate;
+    return email;
   }
 
-  public void setLastUpdate(Date lastUpdate)
+  public void setEmail(final String email)
   {
-    this.lastUpdate = lastUpdate;
+    this.email = email;
+  }
+
+  public String getAuthenticationToken()
+  {
+    return authenticationToken;
+  }
+
+  public void setAuthenticationToken(final String authenticationToken)
+  {
+    this.authenticationToken = authenticationToken;
   }
 }

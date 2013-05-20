@@ -21,73 +21,64 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-package org.projectforge.web.rest.objects;
+package org.projectforge.rest;
 
+import java.util.Date;
 
 /**
- * REST object for system info for initial contact.
+ * Base fields (like DefaultBaseDO of ProjectForge webapp package).
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
  */
-public class ServerInfo
+public abstract class AbstractBaseObject
 {
-  public static final String STATUS_OK = "OK";
+  private Integer id;
 
-  public static final String STATUS_CLIENT_TO_OLD = "CLIENT_TO_OLD";
+  private boolean deleted;
 
-  public static final String STATUS_CLIENT_NEWER_THAN_SERVER = "STATUS_CLIENT_NEWER_THAN_SERVER";
+  private Date created, lastUpdate;
 
-  public static final String STATUS_UNKNOWN = "STATUS_UNKOWN";
-
-  private String version;
-
-  private UserObject user;
-
-  private String status;
-
-  public ServerInfo()
+  public AbstractBaseObject()
   {
   }
 
-  public ServerInfo(final String version)
+  public Integer getId()
   {
-    this.version = version;
+    return id;
   }
 
-  public String getVersion()
+  public void setId(Integer id)
   {
-    return version;
+    this.id = id;
   }
 
-  public void setVersion(final String version)
+  public boolean isDeleted()
   {
-    this.version = version;
+    return deleted;
   }
 
-  public UserObject getUser()
+  public void setDeleted(boolean deleted)
   {
-    return user;
+    this.deleted = deleted;
   }
 
-  public void setUser(final UserObject user)
+  public Date getCreated()
   {
-    this.user = user;
+    return created;
   }
 
-  /**
-   * @return the status of the client server connection.
-   */
-  public String getStatus()
+  public void setCreated(Date created)
   {
-    return status;
+    this.created = created;
   }
 
-  /**
-   * @param status the status to set
-   * @return this for chaining.
-   */
-  public void setStatus(final String status)
+  public Date getLastUpdate()
   {
-    this.status = status;
+    return lastUpdate;
+  }
+
+  public void setLastUpdate(Date lastUpdate)
+  {
+    this.lastUpdate = lastUpdate;
   }
 }

@@ -21,76 +21,73 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-package org.projectforge.web.rest.objects;
-
-import org.projectforge.web.rest.AbstractBaseObject;
-
-
+package org.projectforge.rest.objects;
 
 
 /**
- * REST object user. See {@link PFUserDO} for detail information about the fields.
- * @see PFUserDO
+ * REST object for system info for initial contact.
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
  */
-public class UserObject extends AbstractBaseObject
+public class ServerInfo
 {
-  private String username, firstName, lastName, email;
+  public static final String STATUS_OK = "OK";
 
-  private String authenticationToken;
+  public static final String STATUS_CLIENT_TO_OLD = "CLIENT_TO_OLD";
 
-  public UserObject()
+  public static final String STATUS_CLIENT_NEWER_THAN_SERVER = "STATUS_CLIENT_NEWER_THAN_SERVER";
+
+  public static final String STATUS_UNKNOWN = "STATUS_UNKOWN";
+
+  private String version;
+
+  private UserObject user;
+
+  private String status;
+
+  public ServerInfo()
   {
   }
 
-  public String getUsername()
+  public ServerInfo(final String version)
   {
-    return username;
+    this.version = version;
   }
 
-  public void setUsername(final String username)
+  public String getVersion()
   {
-    this.username = username;
+    return version;
   }
 
-  public String getFirstName()
+  public void setVersion(final String version)
   {
-    return firstName;
+    this.version = version;
   }
 
-  public void setFirstName(final String firstName)
+  public UserObject getUser()
   {
-    this.firstName = firstName;
+    return user;
   }
 
-  public String getLastName()
+  public void setUser(final UserObject user)
   {
-    return lastName;
+    this.user = user;
   }
 
-  public void setLastName(final String lastName)
+  /**
+   * @return the status of the client server connection.
+   */
+  public String getStatus()
   {
-    this.lastName = lastName;
+    return status;
   }
 
-  public String getEmail()
+  /**
+   * @param status the status to set
+   * @return this for chaining.
+   */
+  public void setStatus(final String status)
   {
-    return email;
-  }
-
-  public void setEmail(final String email)
-  {
-    this.email = email;
-  }
-
-  public String getAuthenticationToken()
-  {
-    return authenticationToken;
-  }
-
-  public void setAuthenticationToken(final String authenticationToken)
-  {
-    this.authenticationToken = authenticationToken;
+    this.status = status;
   }
 }

@@ -23,18 +23,12 @@
 
 package org.projectforge.rest;
 
-import java.util.Collection;
-
 import javax.ws.rs.core.MediaType;
 
 import org.projectforge.ProjectForgeVersion;
-import org.projectforge.rest.Authentication;
-import org.projectforge.rest.JsonUtils;
 import org.projectforge.rest.objects.ServerInfo;
-import org.projectforge.rest.objects.TaskObject;
 import org.projectforge.rest.objects.UserObject;
 
-import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -43,15 +37,24 @@ public class RestClientMain
 {
   private static final org.projectforge.common.Logger log = org.projectforge.common.Logger.getLogger(RestClientMain.class);
 
-  private static final String URL = "http://localhost:8080/ProjectForge/rest";
+  public static final String URL = "http://localhost:8080/ProjectForge/rest";
 
   public static void main(final String[] args)
   {
-    // http://localhost:8080/ProjectForge/rest/authenticate/getToken // username / password
     final Client client = Client.create();
+    UserObject user = authenticate(client, "demo", "demo123");
+    initialContact(client, user.getId(), user.getAuthenticationToken());
+  }
+
+  /**
+   * @return authentication token for further rest calls.
+   */
+  public static UserObject authenticate(Client client, String username, String password)
+  {
+    // http://localhost:8080/ProjectForge/rest/authenticate/getToken // username / password
     WebResource webResource = client.resource(URL + "/authenticate/getToken");
-    ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).header(Authentication.AUTHENTICATION_USERNAME, "demo")
-        .header(Authentication.AUTHENTICATION_PASSWORD, "demo123").get(ClientResponse.class);
+    ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).header(Authentication.AUTHENTICATION_USERNAME, username)
+        .header(Authentication.AUTHENTICATION_PASSWORD, password).get(ClientResponse.class);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
     }
@@ -63,48 +66,26 @@ public class RestClientMain
     }
     final Integer userId = user.getId();
     final String authenticationToken = user.getAuthenticationToken();
+    log.info("userId = " + userId + ", authenticationToken=" + authenticationToken);
+    return user;
+  }
 
+  public static void initialContact(Client client, Integer userId, String authenticationToken)
+  {
     // http://localhost:8080/ProjectForge/rest/authenticate/initialContact?clientVersion=5.0 // userId / token
-    webResource = client.resource(URL + "/authenticate/initialContact");
-    response = webResource.queryParam("clientVersion", ProjectForgeVersion.VERSION_STRING).accept(MediaType.APPLICATION_JSON)
-        .header(Authentication.AUTHENTICATION_USER_ID, userId.toString()).header(Authentication.AUTHENTICATION_TOKEN, authenticationToken)
-        .get(ClientResponse.class);
+    WebResource webResource = client.resource(URL + "/authenticate/initialContact");
+    ClientResponse response = webResource.queryParam("clientVersion", ProjectForgeVersion.VERSION_STRING)
+        .accept(MediaType.APPLICATION_JSON).header(Authentication.AUTHENTICATION_USER_ID, userId.toString())
+        .header(Authentication.AUTHENTICATION_TOKEN, authenticationToken).get(ClientResponse.class);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
     }
-    json = response.getEntity(String.class);
+    String json = response.getEntity(String.class);
     log.info(json);
     final ServerInfo serverInfo = JsonUtils.fromJson(json, ServerInfo.class);
     if (serverInfo == null) {
       throw new RuntimeException("Can't deserialize serverInfo : " + json);
     }
-
-    // http://localhost:8080/ProjectForge/rest/task/tree // userId / token
-    webResource = client.resource(URL + "/task/tree");
-    response = webResource.queryParam("search", "").accept(MediaType.APPLICATION_JSON)
-        .header(Authentication.AUTHENTICATION_USER_ID, userId.toString()).header(Authentication.AUTHENTICATION_TOKEN, authenticationToken)
-        .get(ClientResponse.class);
-    if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
-      throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
-    }
-    json = response.getEntity(String.class);
-    log.info(json);
-    final Collection<TaskObject> col = JsonUtils.fromJson(json, new TypeToken<Collection<TaskObject>>() {
-    }.getType());
-    for (final TaskObject task : col) {
-      logTask(task, "");
-    }
-  }
-
-  private static void logTask(final TaskObject task, final String indent)
-  {
-    log.info(indent + task.getTitle());
-    final Collection<TaskObject> children = task.getChildren();
-    if (children == null || children.size() == 0) {
-      return;
-    }
-    for (final TaskObject child : children) {
-      logTask(child, indent + "  ");
-    }
+    log.info("serverInfo=" + serverInfo);
   }
 }

@@ -42,8 +42,13 @@ public class RestClientMain
   public static void main(final String[] args)
   {
     final Client client = Client.create();
-    UserObject user = authenticate(client, "demo", "demo123");
+    UserObject user = authenticate(client);
     initialContact(client, user.getId(), user.getAuthenticationToken());
+  }
+
+  public static UserObject authenticate(Client client)
+  {
+    return authenticate(client, "demo", "demo123");
   }
 
   /**

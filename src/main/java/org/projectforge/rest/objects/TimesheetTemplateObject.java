@@ -26,13 +26,12 @@ package org.projectforge.rest.objects;
 import java.lang.reflect.Field;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
-import org.projectforge.rest.AbstractBaseObject;
 
 /**
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
  */
-public class TimesheetTemplateObject extends AbstractBaseObject
+public class TimesheetTemplateObject
 {
   private String name;
 

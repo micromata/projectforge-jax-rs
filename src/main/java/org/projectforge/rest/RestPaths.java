@@ -61,6 +61,10 @@ public class RestPaths
   public static final String AUTHENTICATE_INITIAL_CONTACT = AUTHENTICATE + "/" + AUTHENTICATE_INITIAL_CONTACT_METHOD;
 
   public static final String TASK = "task";
+  
+  public static final String TIMESHEET = "timesheet";
+
+  public static final String TIMESHEET_TEMPLATE = "timesheetTemplate";
 
   public static final String LIST = "list";
 

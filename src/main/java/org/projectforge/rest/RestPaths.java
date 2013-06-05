@@ -29,26 +29,28 @@ package org.projectforge.rest;
  */
 public class RestPaths
 {
-  public static String buildPath(String... pathElements)
+  public static String buildPath(final String... pathElements)
   {
     if (pathElements == null) {
       return "";
     }
-    StringBuilder sb = new StringBuilder();
+    final StringBuilder sb = new StringBuilder();
     sb.append("/rest");
-    for (String pathElement : pathElements) {
+    for (final String pathElement : pathElements) {
       sb.append("/").append(pathElement);
     }
     return sb.toString();
   }
-  
-  public static final String buildListPath(String path) {
+
+  public static final String buildListPath(final String path) {
     return "/rest/" + path + "/" + LIST;
   }
 
-  public static final String buildTreePath(String path) {
+  public static final String buildTreePath(final String path) {
     return "/rest/" + path + "/" + TREE;
   }
+
+  public static final String ADDRESS = "address";
 
   public static final String AUTHENTICATE = "authenticate";
 
@@ -61,7 +63,7 @@ public class RestPaths
   public static final String AUTHENTICATE_INITIAL_CONTACT = AUTHENTICATE + "/" + AUTHENTICATE_INITIAL_CONTACT_METHOD;
 
   public static final String TASK = "task";
-  
+
   public static final String TIMESHEET = "timesheet";
 
   public static final String TIMESHEET_TEMPLATE = "timesheetTemplate";

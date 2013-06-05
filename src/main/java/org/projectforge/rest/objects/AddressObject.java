@@ -23,7 +23,6 @@
 
 package org.projectforge.rest.objects;
 
-import java.beans.Transient;
 import java.sql.Date;
 import java.util.Locale;
 
@@ -341,7 +340,6 @@ public class AddressObject extends AbstractBaseObject
     return this;
   }
 
-  @Transient
   public String getFullName()
   {
     return StringHelper.listToString(", ", name, firstName);

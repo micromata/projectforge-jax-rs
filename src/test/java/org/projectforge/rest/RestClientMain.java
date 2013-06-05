@@ -42,7 +42,7 @@ public class RestClientMain
   public static void main(final String[] args)
   {
     final Client client = Client.create();
-    UserObject user = authenticate(client);
+    final UserObject user = authenticate(client);
     initialContact(client, user);
   }
 
@@ -52,14 +52,14 @@ public class RestClientMain
    * @param user
    * @return ClientResponse
    */
-  public static ClientResponse getClientResponse(WebResource webResource, UserObject user)
+  public static ClientResponse getClientResponse(final WebResource webResource, final UserObject user)
   {
     return webResource.accept(MediaType.APPLICATION_JSON).header(Authentication.AUTHENTICATION_USER_ID, user.getId().toString())
         .header(Authentication.AUTHENTICATION_TOKEN, user.getAuthenticationToken()).get(ClientResponse.class);
 
   }
 
-  public static UserObject authenticate(Client client)
+  public static UserObject authenticate(final Client client)
   {
     return authenticate(client, "demo", "demo123");
   }
@@ -67,16 +67,16 @@ public class RestClientMain
   /**
    * @return authentication token for further rest calls.
    */
-  public static UserObject authenticate(Client client, String username, String password)
+  public static UserObject authenticate(final Client client, final String username, final String password)
   {
     // http://localhost:8080/ProjectForge/rest/authenticate/getToken // username / password
-    WebResource webResource = client.resource(URL + RestPaths.buildPath(RestPaths.AUTHENTICATE_GET_TOKEN));
-    ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).header(Authentication.AUTHENTICATION_USERNAME, username)
+    final WebResource webResource = client.resource(URL + RestPaths.buildPath(RestPaths.AUTHENTICATE_GET_TOKEN));
+    final ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).header(Authentication.AUTHENTICATION_USERNAME, username)
         .header(Authentication.AUTHENTICATION_PASSWORD, password).get(ClientResponse.class);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
     }
-    String json = response.getEntity(String.class);
+    final String json = response.getEntity(String.class);
     log.info(json);
     final UserObject user = JsonUtils.fromJson(json, UserObject.class);
     if (user == null) {
@@ -88,16 +88,16 @@ public class RestClientMain
     return user;
   }
 
-  public static void initialContact(Client client, UserObject user)
+  public static void initialContact(final Client client, final UserObject user)
   {
     // http://localhost:8080/ProjectForge/rest/authenticate/initialContact?clientVersion=5.0 // userId / token
-    WebResource webResource = client.resource(URL + RestPaths.buildPath(RestPaths.AUTHENTICATE_INITIAL_CONTACT)).queryParam("clientVersion",
+    final WebResource webResource = client.resource(URL + RestPaths.buildPath(RestPaths.AUTHENTICATE_INITIAL_CONTACT)).queryParam("clientVersion",
         ProjectForgeVersion.VERSION_STRING);
-    ClientResponse response = getClientResponse(webResource, user);
+    final ClientResponse response = getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
     }
-    String json = response.getEntity(String.class);
+    final String json = response.getEntity(String.class);
     log.info(json);
     final ServerInfo serverInfo = JsonUtils.fromJson(json, ServerInfo.class);
     if (serverInfo == null) {

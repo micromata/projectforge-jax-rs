@@ -40,6 +40,8 @@ public class UserObject extends AbstractBaseObject
 
   private String authenticationToken;
 
+  private String timeZone, locale;
+
   public UserObject()
   {
   }
@@ -94,11 +96,48 @@ public class UserObject extends AbstractBaseObject
     this.authenticationToken = authenticationToken;
   }
 
+  /**
+   * @return the timeZone
+   */
+  public String getTimeZone()
+  {
+    return timeZone;
+  }
+
+  /**
+   * @param timeZone the timeZone to set
+   * @return this for chaining.
+   */
+  public UserObject setTimeZone(final String timeZone)
+  {
+    this.timeZone = timeZone;
+    return this;
+  }
+
+  /**
+   * @return the locale
+   */
+  public String getLocale()
+  {
+    return locale;
+  }
+
+  /**
+   * @param locale the locale to set
+   * @return this for chaining.
+   */
+  public UserObject setLocale(final String locale)
+  {
+    this.locale = locale;
+    return this;
+  }
+
   @Override
   public String toString()
   {
     return new ReflectionToStringBuilder(this) {
-      protected boolean accept(Field f)
+      @Override
+      protected boolean accept(final Field f)
       {
         return super.accept(f) && !f.getName().equals("authenticationToken");
       }

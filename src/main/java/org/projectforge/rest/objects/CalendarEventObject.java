@@ -49,6 +49,14 @@ public class CalendarEventObject extends AbstractBaseObject
 
   private String note;
 
+  private Date reminder;
+
+  private String reminderType;
+
+  private Integer reminderDuration;
+
+  private String reminderUnit;
+
   public Integer getCalendarId()
   {
     return calendarId;
@@ -123,6 +131,62 @@ public class CalendarEventObject extends AbstractBaseObject
   public CalendarEventObject setNote(final String note)
   {
     this.note = note;
+    return this;
+  }
+
+  /**
+   * Calculated out of reminderDuration and reminderUnit for the developer's convenience.
+   * @return The date (UTC) at which the reminder should be fired.
+   */
+  public Date getReminder()
+  {
+    return reminder;
+  }
+
+  public CalendarEventObject setReminder(final Date reminder)
+  {
+    this.reminder = reminder;
+    return this;
+  }
+
+  public String getReminderType()
+  {
+    return reminderType;
+  }
+
+  public CalendarEventObject setReminderType(final String reminderType)
+  {
+    this.reminderType = reminderType;
+    return this;
+  }
+
+  /**
+   * @return the reminderDuration
+   * @see #getReminder()
+   */
+  public Integer getReminderDuration()
+  {
+    return reminderDuration;
+  }
+
+  public CalendarEventObject setReminderDuration(final Integer reminderDuration)
+  {
+    this.reminderDuration = reminderDuration;
+    return this;
+  }
+
+  /**
+   * @return the reminderUnit
+   * @see #getReminder()
+   */
+  public String getReminderUnit()
+  {
+    return reminderUnit;
+  }
+
+  public CalendarEventObject setReminderUnit(final String reminderUnit)
+  {
+    this.reminderUnit = reminderUnit;
     return this;
   }
 

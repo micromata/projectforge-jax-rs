@@ -25,6 +25,7 @@ package org.projectforge.rest;
 
 import java.util.Collection;
 
+import org.projectforge.rest.objects.CalendarEventObject;
 import org.projectforge.rest.objects.CalendarObject;
 import org.projectforge.rest.objects.UserObject;
 
@@ -42,17 +43,32 @@ public class TeamCalClientMain
     final Client client = Client.create();
     final UserObject user = RestClientMain.authenticate(client);
 
-    final WebResource webResource = client.resource(RestClientMain.URL + RestPaths.buildListPath(RestPaths.TEAMCAL));
-    final ClientResponse response = RestClientMain.getClientResponse(webResource, user);
+    WebResource webResource = client.resource(RestClientMain.URL + RestPaths.buildListPath(RestPaths.TEAMCAL));
+    ClientResponse response = RestClientMain.getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
     }
-    final String json = response.getEntity(String.class);
+    String json = response.getEntity(String.class);
     log.info(json);
-    final Collection<CalendarObject> col = JsonUtils.fromJson(json, new TypeToken<Collection<CalendarObject>>() {
+    final Collection<CalendarObject> calendars = JsonUtils.fromJson(json, new TypeToken<Collection<CalendarObject>>() {
     }.getType());
-    for (final CalendarObject calendar : col) {
+    for (final CalendarObject calendar : calendars) {
       log.info(calendar);
+    }
+
+    webResource = client.resource(RestClientMain.URL + RestPaths.buildListPath(RestPaths.TEAMEVENTS))
+        // .queryParam("calendarIds", "1292975,1240526,1240528");
+        ;
+    response = RestClientMain.getClientResponse(webResource, user);
+    if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
+      throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+    }
+    json = response.getEntity(String.class);
+    log.info(json);
+    final Collection<CalendarEventObject> events = JsonUtils.fromJson(json, new TypeToken<Collection<CalendarEventObject>>() {
+    }.getType());
+    for (final CalendarEventObject event : events) {
+      log.info(event);
     }
   }
 }

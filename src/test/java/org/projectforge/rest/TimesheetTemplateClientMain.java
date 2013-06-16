@@ -40,15 +40,15 @@ public class TimesheetTemplateClientMain
   public static void main(final String[] args)
   {
     final Client client = Client.create();
-    UserObject user = RestClientMain.authenticate(client);
+    final UserObject user = RestClientMain.authenticate(client);
 
     // http://localhost:8080/ProjectForge/rest/task/tree // userId / token
-    WebResource webResource = client.resource(RestClientMain.URL + RestPaths.buildListPath(RestPaths.TIMESHEET_TEMPLATE));
-    ClientResponse response = RestClientMain.getClientResponse(webResource, user);
+    final WebResource webResource = client.resource(RestClientMain.getUrl() + RestPaths.buildListPath(RestPaths.TIMESHEET_TEMPLATE));
+    final ClientResponse response = RestClientMain.getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
     }
-    String json = response.getEntity(String.class);
+    final String json = response.getEntity(String.class);
     log.info(json);
     final Collection<TimesheetTemplateObject> col = JsonUtils.fromJson(json, new TypeToken<Collection<TimesheetTemplateObject>>() {
     }.getType());

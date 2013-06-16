@@ -43,7 +43,7 @@ public class AddressDaoClientMain
     final UserObject user = RestClientMain.authenticate(client);
 
     // http://localhost:8080/ProjectForge/rest/task/tree // userId / token
-    final WebResource webResource = client.resource(RestClientMain.URL + RestPaths.buildListPath(RestPaths.ADDRESS))
+    final WebResource webResource = client.resource(RestClientMain.getUrl() + RestPaths.buildListPath(RestPaths.ADDRESS))
         .queryParam("search", "");//.queryParam("modifiedSince", "" + 1370381761000L);
     final ClientResponse response = RestClientMain.getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {

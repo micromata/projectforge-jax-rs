@@ -183,5 +183,6 @@ public class RestClientMain
           + password
           + "\n");
     }
+    log.info("Testing with user '" + username + "': " + url);
   }
 }

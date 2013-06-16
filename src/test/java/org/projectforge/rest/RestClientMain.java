@@ -23,6 +23,11 @@
 
 package org.projectforge.rest;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 import javax.ws.rs.core.MediaType;
 
 import org.projectforge.ProjectForgeVersion;
@@ -61,6 +66,43 @@ public class RestClientMain
 
   public static UserObject authenticate(final Client client)
   {
+    final String filename = System.getProperty("user.home") + "/ProjectForge/restauthentification.properties";
+    Properties prop = null;
+    FileReader reader = null;
+    {
+      try {
+        log.info("Trying to read user and password from '" + filename + "'");
+        reader = new FileReader(filename);
+        prop = new Properties();
+        prop.load(reader);
+      } catch (final FileNotFoundException ex) {
+        prop = null;
+      } catch (final IOException ex) {
+        prop = null;
+      } finally {
+        if (reader != null) {
+          try {
+            reader.close();
+          } catch (final IOException ex) {
+            prop = null;
+          }
+        }
+      }
+    }
+    if (prop != null) {
+      String username = prop.getProperty("user");
+      String password = prop.getProperty("password");
+      if (username == null) {
+        log.warn("Property 'user' not found in '" + filename + "'. Assuming 'demo'.");
+        username = "demo";
+      }
+      if (password == null) {
+        log.warn("Property 'password' not found in '" + filename + "'. Assuming 'demo123'.");
+        password = "demo123";
+      }
+      return authenticate(client, username, password);
+    }
+    log.info("Property file '" + filename + "' not found (OK). Assuming demo/demo123.");
     return authenticate(client, "demo", "demo123");
   }
 
@@ -91,8 +133,8 @@ public class RestClientMain
   public static void initialContact(final Client client, final UserObject user)
   {
     // http://localhost:8080/ProjectForge/rest/authenticate/initialContact?clientVersion=5.0 // userId / token
-    final WebResource webResource = client.resource(URL + RestPaths.buildPath(RestPaths.AUTHENTICATE_INITIAL_CONTACT)).queryParam("clientVersion",
-        ProjectForgeVersion.VERSION_STRING);
+    final WebResource webResource = client.resource(URL + RestPaths.buildPath(RestPaths.AUTHENTICATE_INITIAL_CONTACT)).queryParam(
+        "clientVersion", ProjectForgeVersion.VERSION_STRING);
     final ClientResponse response = getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());

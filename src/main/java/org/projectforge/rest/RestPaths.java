@@ -23,6 +23,7 @@
 
 package org.projectforge.rest;
 
+
 /**
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
@@ -71,4 +72,8 @@ public class RestPaths
   public static final String LIST = "list";
 
   public static final String TREE = "tree";
+
+  public static final String TEAMCAL = "teamcal";
+
+  public static final String TEAMEVENTS = "teamevents";
 }

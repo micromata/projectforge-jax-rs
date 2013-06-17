@@ -28,6 +28,8 @@ import java.lang.reflect.Field;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 
 /**
+ * This object stores a user preference of ProjectForge used for adding new time-sheets. The user may choose this templates for pre-filling
+ * fields.
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
  */
@@ -39,7 +41,7 @@ public class TimesheetTemplateObject
 
   private UserObject user;
 
-    private String location;
+  private String location;
 
   private String description;
 
@@ -48,13 +50,13 @@ public class TimesheetTemplateObject
   public TimesheetTemplateObject()
   {
   }
-  
+
   public String getName()
   {
     return name;
   }
-  
-  public void setName(String name)
+
+  public void setName(final String name)
   {
     this.name = name;
   }
@@ -64,7 +66,7 @@ public class TimesheetTemplateObject
     return task;
   }
 
-  public void setTask(TaskObject task)
+  public void setTask(final TaskObject task)
   {
     this.task = task;
   }
@@ -74,7 +76,7 @@ public class TimesheetTemplateObject
     return user;
   }
 
-  public void setUser(UserObject user)
+  public void setUser(final UserObject user)
   {
     this.user = user;
   }
@@ -84,7 +86,7 @@ public class TimesheetTemplateObject
     return location;
   }
 
-  public void setLocation(String location)
+  public void setLocation(final String location)
   {
     this.location = location;
   }
@@ -94,7 +96,7 @@ public class TimesheetTemplateObject
     return description;
   }
 
-  public void setDescription(String description)
+  public void setDescription(final String description)
   {
     this.description = description;
   }
@@ -104,7 +106,7 @@ public class TimesheetTemplateObject
     return cost2;
   }
 
-  public void setCost2(Cost2Object cost2)
+  public void setCost2(final Cost2Object cost2)
   {
     this.cost2 = cost2;
   }
@@ -113,7 +115,8 @@ public class TimesheetTemplateObject
   public String toString()
   {
     return new ReflectionToStringBuilder(this) {
-      protected boolean accept(Field f)
+      @Override
+      protected boolean accept(final Field f)
       {
         return super.accept(f) && !f.getName().equals("authenticationToken");
       }

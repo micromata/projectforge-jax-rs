@@ -29,8 +29,8 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.projectforge.rest.AbstractBaseObject;
 
 /**
- * REST object user. See {@link PFUserDO} for detail information about the fields.
- * @see PFUserDO
+ * For documentation please refer the ProjectForge-API: PFUserDO object.
+ * REST object user.
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
  */

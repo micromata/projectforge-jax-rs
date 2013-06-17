@@ -33,6 +33,7 @@ import org.projectforge.task.TaskStatus;
 import org.projectforge.task.TimesheetBookingStatus;
 
 /**
+ * For documentation please refer the ProjectForge-API: TaskDO object.
  * TaskDO object for REST,
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
@@ -64,37 +65,37 @@ public class TaskObject extends AbstractBaseObject implements Comparable<TaskObj
     return description;
   }
 
-  public void setDescription(String description)
+  public void setDescription(final String description)
   {
     this.description = description;
   }
-  
+
   public Integer getMaxHours()
   {
     return maxHours;
   }
 
-  public void setMaxHours(Integer maxHours)
+  public void setMaxHours(final Integer maxHours)
   {
     this.maxHours = maxHours;
   }
-  
+
   public String getTitle()
   {
     return title;
   }
 
-  public void setTitle(String title)
+  public void setTitle(final String title)
   {
     this.title = title;
   }
-  
+
   public Integer getParentTaskId()
   {
     return parentTaskId;
   }
-  
-  public void setParentTaskId(Integer parentTaskId)
+
+  public void setParentTaskId(final Integer parentTaskId)
   {
     this.parentTaskId = parentTaskId;
   }
@@ -104,11 +105,11 @@ public class TaskObject extends AbstractBaseObject implements Comparable<TaskObj
     return shortDescription;
   }
 
-  public void setShortDescription(String shortDescription)
+  public void setShortDescription(final String shortDescription)
   {
     this.shortDescription = shortDescription;
   }
-  
+
   /**
    * @return the priority
    */
@@ -117,41 +118,41 @@ public class TaskObject extends AbstractBaseObject implements Comparable<TaskObj
     return priority;
   }
 
-  public void setPriority(Priority priority)
+  public void setPriority(final Priority priority)
   {
     this.priority = priority;
   }
-  
+
   public TaskStatus getStatus()
   {
     return status;
   }
 
-  public void setStatus(TaskStatus status)
+  public void setStatus(final TaskStatus status)
   {
     this.status = status;
   }
-  
+
   public String getReference()
   {
     return reference;
   }
 
-  public void setReference(String reference)
+  public void setReference(final String reference)
   {
     this.reference = reference;
   }
-  
+
   public TimesheetBookingStatus getTimesheetBookingStatus()
   {
     return timesheetBookingStatus;
   }
 
-  public void setTimesheetBookingStatus(TimesheetBookingStatus timesheetBookingStatus)
+  public void setTimesheetBookingStatus(final TimesheetBookingStatus timesheetBookingStatus)
   {
     this.timesheetBookingStatus = timesheetBookingStatus;
   }
-  
+
   /**
    * @param bookableForTimesheets the bookableForTimesheets to set
    * @return this for chaining.

@@ -29,6 +29,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.projectforge.rest.AbstractBaseObject;
 
 /**
+ * For documentation please refer the ProjectForge-API: TeamCalDO object.
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
  */

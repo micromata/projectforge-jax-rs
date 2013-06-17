@@ -26,6 +26,7 @@ package org.projectforge.rest;
 import java.util.Date;
 
 /**
+ * For documentation please refer the ProjectForge-API: DefaultBaseDO object.
  * Base fields (like DefaultBaseDO of ProjectForge webapp package).
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
@@ -47,7 +48,7 @@ public abstract class AbstractBaseObject
     return id;
   }
 
-  public void setId(Integer id)
+  public void setId(final Integer id)
   {
     this.id = id;
   }
@@ -57,7 +58,7 @@ public abstract class AbstractBaseObject
     return deleted;
   }
 
-  public void setDeleted(boolean deleted)
+  public void setDeleted(final boolean deleted)
   {
     this.deleted = deleted;
   }
@@ -67,7 +68,7 @@ public abstract class AbstractBaseObject
     return created;
   }
 
-  public void setCreated(Date created)
+  public void setCreated(final Date created)
   {
     this.created = created;
   }
@@ -77,7 +78,7 @@ public abstract class AbstractBaseObject
     return lastUpdate;
   }
 
-  public void setLastUpdate(Date lastUpdate)
+  public void setLastUpdate(final Date lastUpdate)
   {
     this.lastUpdate = lastUpdate;
   }

@@ -30,6 +30,7 @@ import org.projectforge.common.StringHelper;
 import org.projectforge.rest.AbstractBaseObject;
 
 /**
+ * For documentation please refer the ProjectForge-API: AddressDO object.
  * AddressObject object for REST,
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 

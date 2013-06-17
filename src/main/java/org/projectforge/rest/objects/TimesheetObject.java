@@ -30,6 +30,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.projectforge.rest.AbstractBaseObject;
 
 /**
+ * For documentation please refer the ProjectForge-API: TimesheetDO object.
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
  */
@@ -60,7 +61,7 @@ public class TimesheetObject extends AbstractBaseObject
     return task;
   }
 
-  public void setTask(TaskObject task)
+  public void setTask(final TaskObject task)
   {
     this.task = task;
   }
@@ -70,7 +71,7 @@ public class TimesheetObject extends AbstractBaseObject
     return user;
   }
 
-  public void setUser(UserObject user)
+  public void setUser(final UserObject user)
   {
     this.user = user;
   }
@@ -80,7 +81,7 @@ public class TimesheetObject extends AbstractBaseObject
     return timeZone;
   }
 
-  public void setTimeZone(String timeZone)
+  public void setTimeZone(final String timeZone)
   {
     this.timeZone = timeZone;
   }
@@ -90,7 +91,7 @@ public class TimesheetObject extends AbstractBaseObject
     return startTime;
   }
 
-  public void setStartTime(Timestamp startTime)
+  public void setStartTime(final Timestamp startTime)
   {
     this.startTime = startTime;
   }
@@ -100,7 +101,7 @@ public class TimesheetObject extends AbstractBaseObject
     return stopTime;
   }
 
-  public void setStopTime(Timestamp stopTime)
+  public void setStopTime(final Timestamp stopTime)
   {
     this.stopTime = stopTime;
   }
@@ -110,7 +111,7 @@ public class TimesheetObject extends AbstractBaseObject
     return location;
   }
 
-  public void setLocation(String location)
+  public void setLocation(final String location)
   {
     this.location = location;
   }
@@ -120,7 +121,7 @@ public class TimesheetObject extends AbstractBaseObject
     return description;
   }
 
-  public void setDescription(String description)
+  public void setDescription(final String description)
   {
     this.description = description;
   }
@@ -130,7 +131,7 @@ public class TimesheetObject extends AbstractBaseObject
     return cost2;
   }
 
-  public void setCost2(Cost2Object cost2)
+  public void setCost2(final Cost2Object cost2)
   {
     this.cost2 = cost2;
   }
@@ -139,7 +140,8 @@ public class TimesheetObject extends AbstractBaseObject
   public String toString()
   {
     return new ReflectionToStringBuilder(this) {
-      protected boolean accept(Field f)
+      @Override
+      protected boolean accept(final Field f)
       {
         return super.accept(f) && !f.getName().equals("authenticationToken");
       }

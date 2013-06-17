@@ -29,7 +29,8 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.projectforge.rest.AbstractBaseObject;
 
 /**
- * REST object cost2. See {@link Kost2DO} for detail information about the fields.
+ * For documentation please refer the ProjectForge-API: Kost2DO object.
+ * REST object cost2.
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
  */
@@ -52,7 +53,7 @@ public class Cost2Object extends AbstractBaseObject
     return number;
   }
 
-  public void setNumber(String number)
+  public void setNumber(final String number)
   {
     this.number = number;
   }
@@ -62,7 +63,7 @@ public class Cost2Object extends AbstractBaseObject
     return type;
   }
 
-  public void setType(String type)
+  public void setType(final String type)
   {
     this.type = type;
   }
@@ -72,7 +73,7 @@ public class Cost2Object extends AbstractBaseObject
     return project;
   }
 
-  public void setProject(String project)
+  public void setProject(final String project)
   {
     this.project = project;
   }
@@ -82,7 +83,7 @@ public class Cost2Object extends AbstractBaseObject
     return customer;
   }
 
-  public void setCustomer(String customer)
+  public void setCustomer(final String customer)
   {
     this.customer = customer;
   }
@@ -91,7 +92,8 @@ public class Cost2Object extends AbstractBaseObject
   public String toString()
   {
     return new ReflectionToStringBuilder(this) {
-      protected boolean accept(Field f)
+      @Override
+      protected boolean accept(final Field f)
       {
         return super.accept(f) && !f.getName().equals("authenticationToken");
       }

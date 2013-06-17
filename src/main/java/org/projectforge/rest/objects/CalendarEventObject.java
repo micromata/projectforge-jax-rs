@@ -26,6 +26,7 @@ package org.projectforge.rest.objects;
 import java.lang.reflect.Field;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.projectforge.rest.AbstractBaseObject;
 
@@ -51,11 +52,13 @@ public class CalendarEventObject extends AbstractBaseObject
 
   private Date reminder;
 
-  private String reminderType;
+  private String reminderType, reminderUnit;
 
   private Integer reminderDuration;
 
-  private String reminderUnit;
+  private String recurrenceRule, recurrenceExDate;
+
+  private Date recurrenceUntil;
 
   public Integer getCalendarId()
   {
@@ -187,6 +190,56 @@ public class CalendarEventObject extends AbstractBaseObject
   public CalendarEventObject setReminderUnit(final String reminderUnit)
   {
     this.reminderUnit = reminderUnit;
+    return this;
+  }
+
+  /**
+   * RRULE (rfc5545)
+   */
+  public String getRecurrenceRule()
+  {
+    return recurrenceRule;
+  }
+
+  public CalendarEventObject setRecurrenceRule(final String recurrenceRule)
+  {
+    this.recurrenceRule = recurrenceRule;
+    return this;
+  }
+
+  /**
+   * @return true if any recurrenceRule is given, otherwise false.
+   */
+  public boolean hasRecurrence()
+  {
+    return StringUtils.isNotBlank(this.recurrenceRule);
+  }
+
+  /**
+   * EXDATE (rfc5545) Ex dates are time stamps of deleted events out of the recurrence events.
+   */
+  public String getRecurrenceExDate()
+  {
+    return recurrenceExDate;
+  }
+
+  public CalendarEventObject setRecurrenceExDate(final String recurrenceExDate)
+  {
+    this.recurrenceExDate = recurrenceExDate;
+    return this;
+  }
+
+  /**
+   * If not given the recurrence will never ends.
+   */
+  public Date getRecurrenceUntil()
+  {
+    return recurrenceUntil;
+  }
+
+  public CalendarEventObject setRecurrenceUntil(final Date recurrenceUntil)
+  {
+    this.recurrenceUntil = recurrenceUntil;
     return this;
   }
 

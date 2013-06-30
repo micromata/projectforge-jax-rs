@@ -31,6 +31,7 @@ import java.util.Properties;
 import javax.ws.rs.core.MediaType;
 
 import org.projectforge.ProjectForgeVersion;
+import org.projectforge.rest.objects.ConnectionSettingsObject;
 import org.projectforge.rest.objects.ServerInfo;
 import org.projectforge.rest.objects.UserObject;
 
@@ -95,6 +96,18 @@ public class RestClientMain
     final String authenticationToken = user.getAuthenticationToken();
     log.info("userId = " + userId + ", authenticationToken=" + authenticationToken);
     return user;
+  }
+
+  public static WebResource setConnectionSettings(final WebResource webResource, final ConnectionSettingsObject settings)
+  {
+    if (settings == null) {
+      return webResource;
+    }
+    WebResource res = webResource;
+    if (settings.isDefaultDateTimeFormat() == false) {
+      res = webResource.queryParam(ConnectionSettings.DATE_TIME_FORMAT, settings.getDateTimeFormat().toString());
+    }
+    return res;
   }
 
   public static void initialContact(final Client client, final UserObject user)

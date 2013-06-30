@@ -25,7 +25,9 @@ package org.projectforge.rest;
 
 import java.util.Collection;
 
+import org.projectforge.rest.converter.DateTimeFormat;
 import org.projectforge.rest.objects.AddressObject;
+import org.projectforge.rest.objects.ConnectionSettingsObject;
 import org.projectforge.rest.objects.UserObject;
 
 import com.google.gson.reflect.TypeToken;
@@ -43,8 +45,10 @@ public class AddressDaoClientMain
     final UserObject user = RestClientMain.authenticate(client);
 
     // http://localhost:8080/ProjectForge/rest/task/tree // userId / token
-    final WebResource webResource = client.resource(RestClientMain.getUrl() + RestPaths.buildListPath(RestPaths.ADDRESS))
-        .queryParam("search", "");//.queryParam("modifiedSince", "" + 1370381761000L);
+    WebResource webResource = client.resource(RestClientMain.getUrl() + RestPaths.buildListPath(RestPaths.ADDRESS))
+        .queryParam("search", "");// .queryParam("modifiedSince", "" + 1370381761000L);
+    webResource = RestClientMain.setConnectionSettings(webResource,
+        new ConnectionSettingsObject().setDateTimeFormat(DateTimeFormat.MILLIS_SINCE_1970));
     final ClientResponse response = RestClientMain.getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       log.error("Failed : HTTP error code : " + response.getStatus());

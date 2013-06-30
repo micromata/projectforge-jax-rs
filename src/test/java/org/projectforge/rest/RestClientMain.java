@@ -31,7 +31,6 @@ import java.util.Properties;
 import javax.ws.rs.core.MediaType;
 
 import org.projectforge.ProjectForgeVersion;
-import org.projectforge.rest.objects.ConnectionSettingsObject;
 import org.projectforge.rest.objects.ServerInfo;
 import org.projectforge.rest.objects.UserObject;
 
@@ -98,7 +97,7 @@ public class RestClientMain
     return user;
   }
 
-  public static WebResource setConnectionSettings(final WebResource webResource, final ConnectionSettingsObject settings)
+  public static WebResource setConnectionSettings(final WebResource webResource, final ConnectionSettings settings)
   {
     if (settings == null) {
       return webResource;

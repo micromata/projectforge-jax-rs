@@ -32,7 +32,6 @@ import java.util.TimeZone;
 
 import org.apache.commons.lang.StringUtils;
 import org.projectforge.rest.ConnectionSettings;
-import org.projectforge.rest.objects.ConnectionSettingsObject;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -49,13 +48,13 @@ import com.google.gson.JsonSyntaxException;
  */
 public class UTCDateTimeTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date>
 {
-  private final DateFormat dateTimeFormatter, dateFormatter;
+  private final DateFormat dateTimeFormatter;
 
   private final DateTimeFormat dateTimeFormat;
 
   public UTCDateTimeTypeAdapter()
   {
-    final ConnectionSettingsObject settings = ConnectionSettings.get();
+    final ConnectionSettings settings = ConnectionSettings.get();
     dateTimeFormat = settings.getDateTimeFormat();
     if (dateTimeFormat != null && dateTimeFormat.getPattern() != null) {
       dateTimeFormatter = new SimpleDateFormat(dateTimeFormat.getPattern(), settings.getLocale());
@@ -63,7 +62,6 @@ public class UTCDateTimeTypeAdapter implements JsonSerializer<Date>, JsonDeseria
     } else {
       dateTimeFormatter = null;
     }
-    dateFormatter = new SimpleDateFormat("yyyy-MM-dd", settings.getLocale());
   }
 
   @Override

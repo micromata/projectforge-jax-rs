@@ -31,7 +31,6 @@ import java.text.SimpleDateFormat;
 
 import org.apache.commons.lang.StringUtils;
 import org.projectforge.rest.ConnectionSettings;
-import org.projectforge.rest.objects.ConnectionSettingsObject;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -52,7 +51,7 @@ public class UTCDateTypeAdapter implements JsonSerializer<Date>, JsonDeserialize
 
   public UTCDateTypeAdapter()
   {
-    final ConnectionSettingsObject settings = ConnectionSettings.get();
+    final ConnectionSettings settings = ConnectionSettings.get();
     dateFormatter = new SimpleDateFormat("yyyy-MM-dd", settings.getLocale());
   }
 

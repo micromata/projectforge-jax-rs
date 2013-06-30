@@ -28,7 +28,6 @@ import java.util.Collection;
 
 import org.projectforge.rest.converter.DateTimeFormat;
 import org.projectforge.rest.objects.AddressObject;
-import org.projectforge.rest.objects.ConnectionSettingsObject;
 import org.projectforge.rest.objects.UserObject;
 
 import com.google.gson.reflect.TypeToken;
@@ -48,8 +47,8 @@ public class AddressDaoClientMain
 
     final Calendar cal = Calendar.getInstance();
     cal.set(2013, Calendar.JUNE, 27);
-    final Long modifiedSince = null;
-    // modifiedSince = cal.getTimeInMillis(); // Uncomment this for testing modifiedSince paramter.
+    final Long modifiedSince = cal.getTimeInMillis();
+    //modifiedSince = null; // Uncomment this for testing modifiedSince paramter.
 
     // http://localhost:8080/ProjectForge/rest/task/tree // userId / token
     WebResource webResource = client.resource(RestClientMain.getUrl() + RestPaths.buildListPath(RestPaths.ADDRESS))
@@ -58,7 +57,7 @@ public class AddressDaoClientMain
       webResource = webResource.queryParam("modifiedSince", "" + modifiedSince);
     }
     webResource = RestClientMain.setConnectionSettings(webResource,
-        new ConnectionSettingsObject().setDateTimeFormat(DateTimeFormat.MILLIS_SINCE_1970));
+        new ConnectionSettings().setDateTimeFormat(DateTimeFormat.MILLIS_SINCE_1970));
     final ClientResponse response = RestClientMain.getClientResponse(webResource, user);
     if (response.getStatus() != ClientResponse.Status.OK.getStatusCode()) {
       log.error("Failed : HTTP error code : " + response.getStatus());

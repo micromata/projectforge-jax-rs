@@ -23,10 +23,13 @@
 
 package org.projectforge.rest;
 
-import org.projectforge.rest.objects.ConnectionSettingsObject;
+import java.util.Locale;
+
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.projectforge.rest.converter.DateTimeFormat;
 
 /**
- * Serialization and deserialization for rest calls.
+ * ConnectionSettings is used for configuring single rest calls. This class also stores a connection settings object in ThreadLocal.
  * @author Kai Reinhard (k.reinhard@micromata.de)
  * 
  */
@@ -34,21 +37,36 @@ public class ConnectionSettings
 {
   private static final org.projectforge.common.Logger log = org.projectforge.common.Logger.getLogger(ConnectionSettings.class);
 
+  private static final DateTimeFormat DEFAULT_DATE_TIME_FORMAT = DateTimeFormat.ISO_DATE_TIME_MILLIS;
+
+  private static ThreadLocal<ConnectionSettings> context = new ThreadLocal<ConnectionSettings>();
+
+  private DateTimeFormat dateTimeFormat = DEFAULT_DATE_TIME_FORMAT;
+
+  private Locale locale = Locale.US;
+
   /**
    * settings.dateTimeFormat
    */
   public static final String DATE_TIME_FORMAT = "settings.dateTimeFormat";
 
-  public final static ConnectionSettingsObject get()
+  /**
+   * @return the connection settings stored in ThreadLocal. If not given in ThreadLocal a new instance is returned.
+   */
+  public final static ConnectionSettings get()
   {
-    ConnectionSettingsObject settings = context.get();
+    ConnectionSettings settings = context.get();
     if (settings == null) {
-      settings = new ConnectionSettingsObject();
+      settings = new ConnectionSettings();
     }
     return settings;
   }
 
-  public final static void set(final ConnectionSettingsObject settings)
+  /**
+   * Stores connection settings in ThreadLocal (don't forget to remove them in a finally block!). Otherwise these settings may shared with other users!
+   * @param settings
+   */
+  public final static void set(final ConnectionSettings settings)
   {
     if (log.isDebugEnabled() == true) {
       log.debug("set connection settings: " + settings);
@@ -56,6 +74,57 @@ public class ConnectionSettings
     context.set(settings);
   }
 
-  private static ThreadLocal<ConnectionSettingsObject> context = new ThreadLocal<ConnectionSettingsObject>();
+  /**
+   * @return the dateTimeFormat
+   */
+  public DateTimeFormat getDateTimeFormat()
+  {
+    return dateTimeFormat;
+  }
 
+  /**
+   * @param dateTimeFormat the dateTimeFormat to set
+   * @return this for chaining.
+   */
+  public ConnectionSettings setDateTimeFormat(final DateTimeFormat dateTimeFormat)
+  {
+    if (dateTimeFormat == null) {
+      this.dateTimeFormat = DateTimeFormat.ISO_DATE_TIME_MILLIS;
+    } else {
+      this.dateTimeFormat = dateTimeFormat;
+    }
+    return this;
+  }
+
+  public boolean isDefaultDateTimeFormat()
+  {
+    return dateTimeFormat == DEFAULT_DATE_TIME_FORMAT;
+  }
+
+  /**
+   * @return the locale
+   */
+  public Locale getLocale()
+  {
+    return locale;
+  }
+
+  /**
+   * @param locale the locale to set
+   * @return this for chaining.
+   */
+  public ConnectionSettings setLocale(final Locale locale)
+  {
+    if (locale == null) {
+      this.locale = Locale.getDefault();
+    }
+    this.locale = locale;
+    return this;
+  }
+
+  @Override
+  public String toString()
+  {
+    return new ReflectionToStringBuilder(this).toString();
+  }
 }

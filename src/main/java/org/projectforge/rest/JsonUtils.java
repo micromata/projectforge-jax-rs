@@ -24,10 +24,10 @@
 package org.projectforge.rest;
 
 import java.lang.reflect.Type;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.projectforge.rest.converter.UTCDateTimeTypeAdapter;
 import org.projectforge.rest.converter.UTCDateTypeAdapter;
 
 import com.google.gson.Gson;
@@ -43,7 +43,7 @@ public class JsonUtils
 {
   private static Map<Class< ? >, Object> typeAdapterMap = new HashMap<Class< ? >, Object>();
 
-  public static void add(Class< ? > cls, Object typeAdapter)
+  public static void add(final Class< ? > cls, final Object typeAdapter)
   {
     typeAdapterMap.put(cls, typeAdapter);
   }
@@ -67,8 +67,10 @@ public class JsonUtils
 
   private static Gson createGson()
   {
-    GsonBuilder builder = new GsonBuilder().registerTypeAdapter(Date.class, new UTCDateTypeAdapter());
-    for (Map.Entry<Class<?>, Object> entry : typeAdapterMap.entrySet()) {
+    final GsonBuilder builder = new GsonBuilder()//
+    .registerTypeAdapter(java.sql.Date.class, new UTCDateTypeAdapter())//
+    .registerTypeAdapter(java.util.Date.class, new UTCDateTimeTypeAdapter());
+    for (final Map.Entry<Class< ? >, Object> entry : typeAdapterMap.entrySet()) {
       builder.registerTypeHierarchyAdapter(entry.getKey(), entry.getValue());
     }
     return builder.create();

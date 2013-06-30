@@ -24,12 +24,14 @@
 package org.projectforge.rest.converter;
 
 import java.lang.reflect.Type;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+
+import org.apache.commons.lang.StringUtils;
+import org.projectforge.rest.ConnectionSettings;
+import org.projectforge.rest.objects.ConnectionSettingsObject;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -46,19 +48,19 @@ import com.google.gson.JsonSyntaxException;
  */
 public class UTCDateTypeAdapter implements JsonSerializer<Date>, JsonDeserializer<Date>
 {
-  private final DateFormat dateFormat;
+  private final DateFormat dateFormatter;
 
   public UTCDateTypeAdapter()
   {
-    dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
-    dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+    final ConnectionSettingsObject settings = ConnectionSettings.get();
+    dateFormatter = new SimpleDateFormat("yyyy-MM-dd", settings.getLocale());
   }
 
   @Override
   public synchronized JsonElement serialize(final Date date, final Type type, final JsonSerializationContext jsonSerializationContext)
   {
-    synchronized (dateFormat) {
-      final String dateFormatAsString = dateFormat.format(date);
+    synchronized (dateFormatter) {
+      final String dateFormatAsString = dateFormatter.format(date);
       return new JsonPrimitive(dateFormatAsString);
     }
   }
@@ -68,8 +70,17 @@ public class UTCDateTypeAdapter implements JsonSerializer<Date>, JsonDeserialize
       final JsonDeserializationContext jsonDeserializationContext)
   {
     try {
-      synchronized (dateFormat) {
-        return dateFormat.parse(jsonElement.getAsString());
+      synchronized (dateFormatter) {
+        final String element = jsonElement.getAsString();
+        if (element == null) {
+          return null;
+        }
+        if (StringUtils.isNumeric(element) == true) {
+          final Date date = new Date(Long.parseLong(element));
+          return date;
+        }
+        final java.util.Date date = dateFormatter.parse(element);
+        return new Date(date.getTime());
       }
     } catch (final ParseException e) {
       throw new JsonSyntaxException(jsonElement.getAsString(), e);

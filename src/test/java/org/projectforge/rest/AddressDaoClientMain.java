@@ -23,6 +23,7 @@
 
 package org.projectforge.rest;
 
+import java.util.Calendar;
 import java.util.Collection;
 
 import org.projectforge.rest.converter.DateTimeFormat;
@@ -39,14 +40,23 @@ public class AddressDaoClientMain
 {
   private static final org.projectforge.common.Logger log = org.projectforge.common.Logger.getLogger(AddressDaoClientMain.class);
 
+  @SuppressWarnings("unused")
   public static void main(final String[] args)
   {
     final Client client = Client.create();
     final UserObject user = RestClientMain.authenticate(client);
 
+    final Calendar cal = Calendar.getInstance();
+    cal.set(2013, Calendar.JUNE, 27);
+    final Long modifiedSince = null;
+    // modifiedSince = cal.getTimeInMillis(); // Uncomment this for testing modifiedSince paramter.
+
     // http://localhost:8080/ProjectForge/rest/task/tree // userId / token
     WebResource webResource = client.resource(RestClientMain.getUrl() + RestPaths.buildListPath(RestPaths.ADDRESS))
-        .queryParam("search", "");// .queryParam("modifiedSince", "" + 1370381761000L);
+        .queryParam("search", "");
+    if (modifiedSince != null) {
+      webResource = webResource.queryParam("modifiedSince", "" + modifiedSince);
+    }
     webResource = RestClientMain.setConnectionSettings(webResource,
         new ConnectionSettingsObject().setDateTimeFormat(DateTimeFormat.MILLIS_SINCE_1970));
     final ClientResponse response = RestClientMain.getClientResponse(webResource, user);

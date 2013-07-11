@@ -7,6 +7,6 @@
   <classpathentry kind="var" path="M2_REPO/com/sun/jersey/jersey-client/1.15/jersey-client-1.15.jar" sourcepath="M2_REPO/com/sun/jersey/jersey-client/1.15/jersey-client-1.15-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/sun/jersey/jersey-core/1.15/jersey-core-1.15.jar" sourcepath="M2_REPO/com/sun/jersey/jersey-core/1.15/jersey-core-1.15-sources.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.7/junit-4.7.jar" sourcepath="M2_REPO/junit/junit/4.7/junit-4.7-sources.jar"/>
-  <classpathentry kind="var" path="M2_REPO/org/projectforge/projectforge-common/5.1.1-SNAPSHOT/projectforge-common-5.1.1-SNAPSHOT.jar" sourcepath="M2_REPO/org/projectforge/projectforge-common/5.1.1-SNAPSHOT/projectforge-common-5.1.1-SNAPSHOT-sources.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/projectforge/projectforge-common/5.2.1-SNAPSHOT/projectforge-common-5.2.1-SNAPSHOT.jar" sourcepath="M2_REPO/org/projectforge/projectforge-common/5.2.1-SNAPSHOT/projectforge-common-5.2.1-SNAPSHOT-sources.jar"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 </classpath>
